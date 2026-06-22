@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Modules\VisaApplications\Events;
+
+use App\Modules\VisaApplications\Enums\ApplicationStatus;
+use App\Modules\VisaApplications\Models\VisaApplication;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
+
+class VisaApplicationStatusChanged
+{
+    use Dispatchable, SerializesModels;
+
+    public function __construct(public VisaApplication $application, public ApplicationStatus $from, public ApplicationStatus $to) {}
+}
