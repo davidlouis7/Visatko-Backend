@@ -1,0 +1,122 @@
+openapi: 3.0.3
+info:
+  title: Visatko Backend API
+  version: 1.0.0
+  description: >
+    Laravel API for Visatko Visa Service. Authenticate with `/api/v1/auth/login`
+    and pass `Authorization: Bearer {token}` for admin endpoints.
+servers:
+  - url: /api/v1
+security:
+  - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Sanctum token
+  schemas:
+    ApiResponse:
+      type: object
+      properties:
+        success: { type: boolean }
+        message: { type: string }
+        data: {}
+        meta: { type: object }
+paths:
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Login and receive Sanctum token
+      security: []
+      responses:
+        '200': { description: Authenticated }
+  /countries:
+    get:
+      tags: [Countries]
+      summary: List active countries
+      security: []
+      responses:
+        '200': { description: Countries }
+  /visa-services:
+    get:
+      tags: [Visa Services]
+      summary: List active visa services
+      security: []
+      responses:
+        '200': { description: Visa services }
+  /blog/posts:
+    get:
+      tags: [Blog]
+      summary: List published blog posts
+      security: []
+      responses:
+        '200': { description: Blog posts }
+  /public/consultations:
+    post:
+      tags: [Consultations]
+      summary: Submit public consultation request
+      security: []
+      responses:
+        '201': { description: Consultation created }
+  /public/visa-applications:
+    post:
+      tags: [Applications]
+      summary: Submit public visa application
+      security: []
+      responses:
+        '201': { description: Application created }
+  /admin/visa-applications/{visa_application}/documents:
+    post:
+      tags: [Documents]
+      summary: Upload application document
+      parameters:
+        - in: path
+          name: visa_application
+          required: true
+          schema: { type: integer }
+      responses:
+        '201': { description: Document uploaded }
+  /admin/invoices:
+    get:
+      tags: [Invoices]
+      summary: List invoices
+      responses:
+        '200': { description: Invoices }
+    post:
+      tags: [Invoices]
+      summary: Create invoice
+      responses:
+        '201': { description: Invoice created }
+  /public/invoices/{invoice_number}/pay/stripe:
+    post:
+      tags: [Payments]
+      summary: Create Stripe checkout session
+      security: []
+      parameters:
+        - in: path
+          name: invoice_number
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: Checkout created }
+  /admin/refund-requests:
+    get:
+      tags: [Refunds]
+      summary: List refund requests
+      responses:
+        '200': { description: Refund requests }
+  /admin/reports/dashboard:
+    get:
+      tags: [Reports]
+      summary: Dashboard report
+      responses:
+        '200': { description: Dashboard metrics }
+  /system/health:
+    get:
+      tags: [System]
+      summary: System health check
+      security: []
+      responses:
+        '200': { description: Healthy or degraded }
+        '503': { description: Unhealthy }

@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Middleware\AssignRequestId;
+use App\Http\Middleware\ForceJsonResponse;
+use App\Http\Middleware\PreventProductionDebug;
 use App\Http\Middleware\ResolveLocale;
+use App\Http\Middleware\SecureApiHeaders;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -23,7 +26,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->api(prepend: [AssignRequestId::class, ResolveLocale::class]);
+        $middleware->api(prepend: [ForceJsonResponse::class, PreventProductionDebug::class, AssignRequestId::class, ResolveLocale::class, SecureApiHeaders::class]);
         $middleware->alias([
             'permission' => PermissionMiddleware::class,
             'role' => RoleMiddleware::class,
@@ -31,6 +34,8 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->dontFlash(['current_password', 'password', 'password_confirmation', 'token', 'secret', 'api_key', 'authorization']);
+
         $exceptions->render(function (ValidationException $exception, Request $request) {
             if (! $request->is('api/*')) {
                 return null;

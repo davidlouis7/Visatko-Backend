@@ -23,7 +23,7 @@ class VisaApplication extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['application_number', 'customer_id', 'visa_service_id', 'consultation_id', 'assigned_to', 'full_name', 'email', 'phone', 'whatsapp_number', 'nationality', 'residence_country', 'emirate', 'passport_number', 'travel_date', 'status', 'payment_status', 'customer_notes', 'internal_notes', 'source', 'submitted_at', 'completed_at'];
+    protected $fillable = ['application_number', 'customer_id', 'visa_service_id', 'consultation_id', 'assigned_to', 'full_name', 'email', 'phone', 'whatsapp_number', 'nationality', 'residence_country', 'emirate', 'passport_number', 'travel_date', 'status', 'payment_status', 'customer_notes', 'internal_notes', 'source', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'landing_page', 'referrer', 'gclid', 'fbclid', 'meta_event_id', 'submitted_at', 'completed_at'];
 
     protected function casts(): array
     {

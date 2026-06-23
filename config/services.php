@@ -39,4 +39,19 @@ return [
         ],
     ],
 
+    'frontend_url' => env('FRONTEND_URL', env('APP_URL')),
+
+    'stripe' => [
+        'key' => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
+        'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
+    ],
+
+    'tabby' => [
+        'public_key' => env('TABBY_PUBLIC_KEY'),
+        'secret' => env('TABBY_SECRET_KEY'),
+        'merchant_code' => env('TABBY_MERCHANT_CODE'),
+        'webhook_secret' => env('TABBY_WEBHOOK_SECRET'),
+    ],
+
 ];

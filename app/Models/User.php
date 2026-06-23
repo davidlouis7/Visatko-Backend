@@ -3,8 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Modules\Consultations\Models\Consultation;
+use App\Modules\VisaApplications\Models\VisaApplication;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -63,5 +66,15 @@ class User extends Authenticatable
             ->logOnly(['name', 'email', 'phone', 'is_active'])
             ->logOnlyDirty()
             ->dontLogEmptyChanges();
+    }
+
+    public function consultationsAssigned(): HasMany
+    {
+        return $this->hasMany(Consultation::class, 'assigned_to');
+    }
+
+    public function applicationsAssigned(): HasMany
+    {
+        return $this->hasMany(VisaApplication::class, 'assigned_to');
     }
 }

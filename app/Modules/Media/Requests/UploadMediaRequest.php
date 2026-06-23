@@ -21,7 +21,7 @@ class UploadMediaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => ['required', 'file', 'max:10240', 'mimes:jpg,jpeg,png,webp,pdf,doc,docx'],
+            'file' => ['required', 'file', 'max:'.(int) env('MAX_UPLOAD_KB', 5120), 'mimetypes:image/jpeg,image/png,image/webp,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
             'collection' => ['required', Rule::in(self::COLLECTIONS)],
             'metadata' => ['sometimes', 'array'],
         ];

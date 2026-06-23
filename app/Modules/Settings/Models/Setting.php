@@ -2,11 +2,14 @@
 
 namespace App\Modules\Settings\Models;
 
+use App\Support\Cache\ClearsPublicApiCache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Crypt;
 
 class Setting extends Model
 {
+    use ClearsPublicApiCache;
+
     protected $fillable = ['group', 'key', 'value', 'type', 'is_public', 'is_encrypted'];
 
     protected function casts(): array
